@@ -5,13 +5,19 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+// const pool = new Pool({
+//     user: process.env.USER,
+//     password: process.env.PASSWORD,
+//     host: process.env.HOST,
+//     port: process.env.DBPORT,
+//     database: process.env.DATABASE,
+// });
+
+// for vercel database:
+
 const pool = new Pool({
-    user: process.env.USER,
-    password: process.env.PASSWORD,
-    host: process.env.HOST,
-    port: process.env.DBPORT,
-    database: process.env.DATABASE,
-});
+    connectionString: process.env.POSTGRES_URL,
+  })
 
 // create a user table:
 const createUserTable = async () => {
