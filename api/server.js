@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const db = require('./db');
-const userRoutes = require('./routes/userRoutes');
+const db = require('../db');
+const userRoutes = require('../routes/userRoutes');
 
 // Load the environment variables
 dotenv.config();
@@ -31,4 +31,3 @@ app.listen(PORT, (error) => {
 app.get('/', (req, res) => {
     res.status(200).send('Server Is Listening');
 });
-
