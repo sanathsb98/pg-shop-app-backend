@@ -1,11 +1,12 @@
 const db = require('../db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv')
 const nodemailer = require('nodemailer')
 
 dotenv.config();
+
 
 const getAllUsers = async () => {
     try {
