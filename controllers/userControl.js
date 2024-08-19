@@ -41,12 +41,13 @@ const resetPassword = async(req,res) => {
 }
 
 const verifyResetPassToken = async(req,res) => {
-  const {token} = req.query;
-  console.log("token",token)
+  const {token} = req.body;
+  console.log("token__",token)
   try{
  
   const email = await userModal.verifyResetToken(token);
-  res.redirect(`/users/updatePassword?token=${token}`)
+//   res.redirect(`/users/updatePassword?token=${token}`)
+   res.status(200).send({message : email})
   }catch(error){
     res.status(500).json({message:'Invalid or expired reset token'})
   }

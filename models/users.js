@@ -128,6 +128,7 @@ const verifyResetToken = async (token) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         const email = decoded.email;
+    
         const result = await db.pool.query('SELECT * FROM users WHERE email = $1 AND resettoken = $2', [email, token])
         if (result.rows.length > 0) {
             return email;
