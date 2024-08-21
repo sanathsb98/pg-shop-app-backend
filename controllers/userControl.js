@@ -63,11 +63,22 @@ const updateUserPassword = async (req, res) => {
     }
 }
 
+const verifyUserTokenExpiry = async (req, res) => {
+    const { usertoken } = req.body;
+    try {
+        const result = await userModal.verifyUserToken(usertoken)
+        res.status(200).json(result)
+    } catch (error) {
+        res.status(500).json({ message: 'invalid user token' })
+    }
+}
+
 module.exports = {
     getFullUsers,
     createNewUser,
     loginUser,
     resetPassword,
     verifyResetPassToken,
-    updateUserPassword
+    updateUserPassword,
+    verifyUserTokenExpiry
 };

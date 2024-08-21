@@ -153,11 +153,29 @@ const updatePassword = async (token, newPassword) => {
     }
 }
 
+const verifyUserToken = async (token) => {
+    try {
+        const userToken = jwt.verify(token, process.env.JWT_SECRET)
+        const email = userToken.email;
+        const user = await db.pool.query("SELECT * FROM users WHERE usertoken = $1 AND email = $2", [token,email])
+        if (user.rows.length > 0) {
+            return user.rows[0].email
+        } else {
+            console.error("invalid token");
+            throw error;
+        }
+    } catch (error) {
+        console.error('invalid user token');
+        throw error;
+    }
+}
+
 module.exports = {
     getAllUsers,
     createUser,
     userLogin,
     resetPassword,
     verifyResetToken,
-    updatePassword
+    updatePassword,
+    verifyUserToken
 };
