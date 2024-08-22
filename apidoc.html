@@ -49,4 +49,25 @@ users/verifyUserToken
 usertoken : ""
 }
 
+******************* GET ALL PRODUCTS *********************
+products/allProducts
+
+******************* ADD NEW PRODUCT *********************
+products/addProduct
+{
+    product_name
+    product_des 
+    product_price 
+    stock_quantity 
+    product_image 
+}
+
+******************* GET LIMITED PRODUCTS (send data in the query)*********************
+products/addProduct
+
+http://localhost:3000/products/limitProducts?page={}&limit={}
+
 -->
+
+
+

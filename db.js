@@ -32,10 +32,23 @@ const createUserTable = async () => {
     }
 };
 
+// create products table:
+const createProductsTable = async () => {
+    const filePath = path.join(__dirname, 'tables', 'products.sql');
+    const sql = fs.readFileSync(filePath, 'utf8');
+    try {
+        await pool.query(sql)
+        console.log('Products table created or already exists');
+    } catch (error) {
+        console.log('cannot create products table:',error)
+    }
+}
+
 // Export both the pool and the createUserTable function
 module.exports = {
     pool,
-    createUserTable
+    createUserTable,
+    createProductsTable
 };
 
 

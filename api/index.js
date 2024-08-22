@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const db = require('../db');
 const userRoutes = require('../routes/userRoutes');
+const productRoutes = require('../routes/productRoutes')
+
 
 // Load the environment variables
 dotenv.config();
@@ -16,8 +18,10 @@ app.use(express.json());
 
 // Create the users table
 db.createUserTable();
+db.createProductsTable();
 
 app.use('/users',userRoutes)
+app.use('/products',productRoutes)
 
 // Start the server
 app.listen(PORT, (error) => {
