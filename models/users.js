@@ -159,7 +159,10 @@ const verifyUserToken = async (token) => {
         const email = userToken.email;
         const user = await db.pool.query("SELECT * FROM users WHERE usertoken = $1 AND email = $2", [token,email])
         if (user.rows.length > 0) {
-            return user.rows[0].email
+            return {
+                name : user.rows[0].name,
+                email : user.rows[0].email
+            }
         } else {
             console.error("invalid token");
             throw error;
