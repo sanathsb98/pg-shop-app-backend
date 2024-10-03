@@ -22,13 +22,19 @@ const addToCart = async (user_id, product_id, order_quantity) => {
       cart = cart.rows[0];
     }
 
-    // Add the product to the cart_items table
-    const cartItem = await db.pool.query(
-      "INSERT INTO cartItems (cart_id, product_id, order_quantity) VALUES ($1, $2, $3) RETURNING *",
-      [cart.cart_id, product_id, order_quantity]
-    );
+    // Check if the product alreday exists in cart
+      const isProductExists = await db.pool.query("SELECT * FROM cartItems WHERE product_id = $1", [product_id]);
+      if (isProductExists.rows.length === 0) {
+          const cartItem = await db.pool.query(
+              "INSERT INTO cartItems (cart_id, product_id, order_quantity) VALUES ($1, $2, $3) RETURNING *",
+              [cart.cart_id, product_id, order_quantity]
+          );
+          return cartItem.rows[0];
+      } else {
+          return { message: "product already exists in cart" }
+      }
 
-    return cartItem.rows[0];
+  
   } catch (error) {
     console.error("Cannot add product to cart", error);
     throw error; // Optionally re-throw the error for higher-level handling
