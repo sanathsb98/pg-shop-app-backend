@@ -11,8 +11,19 @@ const addItemToCart = async(req,res) => {
     }
 }
 
+const getCartItems = async(req,res) => {
+  const {user_id} = req.body;
+  try{
+  const cartData = await cartModal.returnCartItems(user_id);
+  res.status(200).json(cartData)
+  }catch(err){
+    return res.status(500).json({message:"cant get cart details"})
+  }
+}
+
 module.exports = {
-    addItemToCart
+    addItemToCart,
+    getCartItems
 }
 
 // {

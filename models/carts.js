@@ -42,7 +42,38 @@ const addToCart = async (user_id, product_id, order_quantity) => {
   }
 };
 
+const returnCartItems = async(user_id) => {
+  try{
+  const userCartData =  await db.pool.query(
+         `SELECT 
+          cartItems.cartItem_id,
+          cartItems.cart_id,
+          cartItems.product_id,
+          products.product_name AS product_name,
+          products.product_price AS product_price,
+          products.product_des AS product_des,
+          cartItems.order_quantity,
+          cartItems.added_at,
+          carts.created_at AS cart_created_at
+      FROM 
+          cartItems
+      JOIN 
+          products ON cartItems.product_id = products.id
+      JOIN 
+          carts ON cartItems.cart_id = carts.cart_id
+      WHERE 
+          carts.user_id = $1;`,[user_id]);
+          return userCartData.rows;
+  }catch(error){
+    console.log("can't get cart items",error);
+    throw error;
+  }
+}
 
-module.exports = {addToCart}
+
+module.exports = {
+  addToCart,
+  returnCartItems
+}
 
 
