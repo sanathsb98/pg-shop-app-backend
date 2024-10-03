@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const db = require('../db');
 const userRoutes = require('../routes/userRoutes');
 const productRoutes = require('../routes/productRoutes')
+const cartRoutes = require("../routes/cartRoutes")
 
 
 // Load the environment variables
@@ -19,9 +20,12 @@ app.use(express.json());
 // Create the users table
 db.createUserTable();
 db.createProductsTable();
+db.createCartsTable();
+db.createCartItemsTable();
 
 app.use('/users',userRoutes)
 app.use('/products',productRoutes)
+app.use('/cart',cartRoutes)
 
 // Start the server
 app.listen(PORT, (error) => {

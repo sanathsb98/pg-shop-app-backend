@@ -161,7 +161,8 @@ const verifyUserToken = async (token) => {
         if (user.rows.length > 0) {
             return {
                 name : user.rows[0].name,
-                email : user.rows[0].email
+                email : user.rows[0].email,
+                userId : user.rows[0].id
             }
         } else {
             console.error("invalid token");

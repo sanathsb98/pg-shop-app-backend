@@ -44,11 +44,37 @@ const createProductsTable = async () => {
     }
 }
 
+// create carts table:
+const createCartsTable = async() => {
+    const filePath = path.join(__dirname,'tables','carts.sql');
+    const sql = fs.readFileSync(filePath,'utf-8');
+    try{
+        await pool.query(sql)
+        console.log('Carts table created or already exists')
+    }catch(error){
+        console.log("cannot create carts table")
+    }
+}
+
+// create cart items table:
+const createCartItemsTable = async() => {
+    const filePath = path.join(__dirname,'tables','cartItems.sql');
+    const sql = fs.readFileSync(filePath,'utf-8');
+    try{
+        await pool.query(sql)
+        console.log('Cart Items table created or already exists')
+    }catch(error){
+        console.log("cannot create cart items table")
+    }
+}
+
 // Export both the pool and the createUserTable function
 module.exports = {
     pool,
     createUserTable,
-    createProductsTable
+    createProductsTable,
+    createCartsTable,
+    createCartItemsTable
 };
 
 
