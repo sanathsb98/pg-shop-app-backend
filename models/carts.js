@@ -31,7 +31,8 @@ const addToCart = async (user_id, product_id, order_quantity) => {
           );
           return cartItem.rows[0];
       } else {
-          return { message: "product already exists in cart" }
+         const updatedCart = await db.pool.query("UPDATE cartItems SET order_quantity = $1 WHERE product_id = $2 RETURNING *",[order_quantity,product_id]);
+         return updatedCart.rows[0];
       }
 
   
