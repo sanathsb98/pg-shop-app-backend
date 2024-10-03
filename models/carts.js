@@ -52,6 +52,7 @@ const returnCartItems = async(user_id) => {
           products.product_name AS product_name,
           products.product_price AS product_price,
           products.product_des AS product_des,
+          products.product_image AS product_image,
           cartItems.order_quantity,
           cartItems.added_at,
           carts.created_at AS cart_created_at
