@@ -11,19 +11,30 @@ const addItemToCart = async(req,res) => {
     }
 }
 
-const getCartItems = async(req,res) => {
-  const {user_id} = req.body;
-  try{
-  const cartData = await cartModal.returnCartItems(user_id);
-  res.status(200).json(cartData)
-  }catch(err){
-    return res.status(500).json({message:"cant get cart details"})
+const getCartItems = async (req, res) => {
+  const { user_id } = req.body;
+  try {
+    const cartData = await cartModal.returnCartItems(user_id);
+    res.status(200).json(cartData)
+  } catch (err) {
+    return res.status(500).json({ message: "cant get cart details" })
+  }
+}
+
+const updateProductQuantity = async (req, res) => {
+  const { product_quantity, product_id } = req.body;
+  try {
+   const updatedQuantity = await cartModal.updateProductQuantity(product_quantity, product_id)
+   res.status(200).json(updatedQuantity)
+  } catch (error) {
+    return res.status(500).json({ message: "cant update product quantity" })
   }
 }
 
 module.exports = {
-    addItemToCart,
-    getCartItems
+  addItemToCart,
+  getCartItems,
+  updateProductQuantity
 }
 
 // {

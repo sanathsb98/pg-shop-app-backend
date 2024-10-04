@@ -71,10 +71,21 @@ const returnCartItems = async(user_id) => {
   }
 }
 
+const updateProductQuantity = async (product_quantity, product_id) => {
+  try {
+    const updatedQuantity = await db.pool.query("UPDATE cartItems SET order_quantity = $1 WHERE  product_id = $2 RETURNING *", [product_quantity, product_id]);
+    return updatedQuantity.rows[0]
+  } catch (error) {
+    console.log("error in updating product quantity", error);
+    throw error;
+  }
+}
+
 
 module.exports = {
   addToCart,
-  returnCartItems
+  returnCartItems,
+  updateProductQuantity
 }
 
 
