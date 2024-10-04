@@ -1,3 +1,4 @@
+const { json } = require("express");
 const db = require("../db");
 
 const addToCart = async (user_id, product_id, order_quantity) => {
@@ -81,11 +82,28 @@ const updateProductQuantity = async (product_quantity, product_id) => {
   }
 }
 
+const removeFromCart = async (product_id) => {
+  try {
+    const product = await db.pool.query("SELECT * FROM cartItems WHERE product_id = $1", [product_id]);
+    if (product.rows.length > 0) {
+      // Delete the product if it exists
+      await db.pool.query("DELETE FROM cartItems WHERE product_id = $1", [product_id]);
+      return { message: "Product successfully removed from cart" };
+    } else {
+      return { message: "Invalid product id" };
+    }
+  } catch (error) {
+    console.log("Error in removing the cart item", error);
+    throw error;
+  }
+};
+
 
 module.exports = {
   addToCart,
   returnCartItems,
-  updateProductQuantity
+  updateProductQuantity,
+  removeFromCart,
 }
 
 

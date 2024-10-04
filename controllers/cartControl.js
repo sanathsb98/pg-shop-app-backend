@@ -31,10 +31,22 @@ const updateProductQuantity = async (req, res) => {
   }
 }
 
+const removeFromCart = async (req, res) => {
+  const { product_id } = req.body;
+  try {
+   const deletedItem = await cartModal.removeFromCart(product_id)
+   res.status(200).json(deletedItem)
+  } catch (error) {
+    return res.status(500).json({ message: "cant remove the item" })
+  }
+}
+
+
 module.exports = {
   addItemToCart,
   getCartItems,
-  updateProductQuantity
+  updateProductQuantity,
+  removeFromCart
 }
 
 // {
