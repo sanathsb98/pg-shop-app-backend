@@ -146,8 +146,8 @@ const updatePassword = async (token, newPassword) => {
     try {
         const email = await verifyResetToken(token);
         const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-       await db.pool.query('UPDATE users SET password = $1, resettoken = NULL WHERE email = $2', [hashedPassword, email])
-       return {message : 'Password updated successfully'}
+       const data = await db.pool.query('UPDATE users SET password = $1, resettoken = NULL WHERE email = $2 RETURNING *', [hashedPassword, email])
+       return {message : 'Password updated successfully',response:data.rows[0]}
     } catch (error) {
         console.error('Error in updating password', error);
         throw error;
