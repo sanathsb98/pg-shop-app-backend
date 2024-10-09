@@ -64,7 +64,10 @@ const returnCartItems = async(user_id) => {
       JOIN 
           carts ON cartItems.cart_id = carts.cart_id
       WHERE 
-          carts.user_id = $1;`,[user_id]);
+          carts.user_id = $1
+          ORDER BY
+          cartItems.added_at DESC;`,
+          [user_id]);
           return userCartData.rows;
   }catch(error){
     console.log("can't get cart items",error);
