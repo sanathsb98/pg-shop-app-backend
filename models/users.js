@@ -110,6 +110,7 @@ const resetPassword = async (email, password) => {
 const sendResetEmail = async (email, token) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
+        pool : true,
         auth: {
             user: process.env.EMAIL,
             pass: process.env.APP_PASSWORD
