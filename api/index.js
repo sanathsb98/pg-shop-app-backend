@@ -5,6 +5,7 @@ const db = require('../db');
 const userRoutes = require('../routes/userRoutes');
 const productRoutes = require('../routes/productRoutes')
 const cartRoutes = require("../routes/cartRoutes")
+const addressRoutes = require("../routes/addressRoute")
 
 
 // Load the environment variables
@@ -22,10 +23,12 @@ db.createUserTable();
 db.createProductsTable();
 db.createCartsTable();
 db.createCartItemsTable();
+db.createAddressTable();
 
 app.use('/users',userRoutes)
 app.use('/products',productRoutes)
 app.use('/cart',cartRoutes)
+app.use("/address",addressRoutes)
 
 // Start the server
 app.listen(PORT, (error) => {

@@ -7,7 +7,7 @@ const addItemToCart = async(req,res) => {
     const cart = await cartModal.addToCart(user_id, product_id, order_quantity);
     res.status(200).json(cart)
     }catch(err){
-        res.status(500).json({message:"cant add to cart"})
+       return res.status(500).json({message:"cant add to cart"})
     }
 }
 

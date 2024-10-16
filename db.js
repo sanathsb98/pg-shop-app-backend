@@ -68,13 +68,26 @@ const createCartItemsTable = async() => {
     }
 }
 
+// create address table:
+const createAddressTable = async() => {
+    const filePath = path.join(__dirname,'tables','address.sql');
+    const sql = fs.readFileSync(filePath,'utf-8');
+    try{
+        await pool.query(sql)
+        console.log('Address table created or already exists')
+    }catch(error){
+        console.log("cannot create address table")
+    }
+}
+
 // Export both the pool and the createUserTable function
 module.exports = {
     pool,
     createUserTable,
     createProductsTable,
     createCartsTable,
-    createCartItemsTable
+    createCartItemsTable,
+    createAddressTable
 };
 
 
