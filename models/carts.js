@@ -23,20 +23,28 @@ const addToCart = async (user_id, product_id, order_quantity) => {
       cart = cart.rows[0];
     }
 
-    // Check if the product alreday exists in cart
-      const isProductExists = await db.pool.query("SELECT * FROM cartItems WHERE cart_id = $1 product_id = $2", [cart.cart_id , product_id]);
-      if (isProductExists.rows.length === 0) {
-          const cartItem = await db.pool.query(
-              "INSERT INTO cartItems (cart_id, product_id, order_quantity) VALUES ($1, $2, $3) RETURNING *",
-              [cart.cart_id, product_id, order_quantity]
-          );
-          return cartItem.rows[0];
-      } else {
-         const updatedCart = await db.pool.query("UPDATE cartItems SET order_quantity = $1 WHERE cart_id = $2 WHERE product_id = $3 RETURNING *",[order_quantity,cart.cart_id,product_id]);
-         return updatedCart.rows[0];
-      }
+    // Check if the product already exists in the user's cart
+    const isProductExists = await db.pool.query(
+      "SELECT * FROM cartItems WHERE cart_id = $1 AND product_id = $2",
+      [cart.cart_id, product_id]
+    );
 
-  
+    if (isProductExists.rows.length === 0) {
+      // Insert the new product into the cart
+      const cartItem = await db.pool.query(
+        "INSERT INTO cartItems (cart_id, product_id, order_quantity) VALUES ($1, $2, $3) RETURNING *",
+        [cart.cart_id, product_id, order_quantity]
+      );
+      return cartItem.rows[0];
+    } else {
+      // Update the existing product quantity in the cart
+      const updatedCart = await db.pool.query(
+        "UPDATE cartItems SET order_quantity = $1 WHERE cart_id = $2 AND product_id = $3 RETURNING *",
+        [order_quantity, cart.cart_id, product_id]
+      );
+      return updatedCart.rows[0];
+    }
+
   } catch (error) {
     console.error("Cannot add product to cart", error);
     throw error; // Optionally re-throw the error for higher-level handling
