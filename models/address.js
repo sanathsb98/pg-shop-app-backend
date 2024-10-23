@@ -1,9 +1,9 @@
 const db = require("../db")
 
-const addDeliveryAddress = async(name,email,user_id,phone,zipcode,locality,deladdress,city,state,landmark,alternatephone) => {
+const addDeliveryAddress = async(name,user_id,phone,zipcode,locality,deladdress,city,state,landmark,alternatephone) => {
     try{
-      const address = await db.pool.query("INSERT INTO address (user_id,phone,zipcode,locality,address,city,state,landmark,alternatephone,name,email) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *",
-            [user_id,phone,zipcode,locality,deladdress,city,state,landmark,alternatephone,name,email]
+      const address = await db.pool.query("INSERT INTO address (user_id,phone,zipcode,locality,address,city,state,landmark,alternatephone,name) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *",
+            [user_id,phone,zipcode,locality,deladdress,city,state,landmark,alternatephone,name]
         )
         return address.rows[0]
     }catch(error){
@@ -15,7 +15,7 @@ const addDeliveryAddress = async(name,email,user_id,phone,zipcode,locality,delad
 const getDeliveryAddress = async (user_id) => {
     try {
         const address = await db.pool.query(
-            "SELECT address.id as address_id, users.id as user_id, address.name, address.email, address.phone, address.zipcode, address.locality, address.address, address.city, address.state, address.landmark, address.alternatephone FROM address JOIN users ON address.user_id = users.id WHERE users.id = $1", [user_id])
+            "SELECT address.id as address_id, users.id as user_id, address.name, users.email, address.phone, address.zipcode, address.locality, address.address, address.city, address.state, address.landmark, address.alternatephone FROM address JOIN users ON address.user_id = users.id WHERE users.id = $1", [user_id])
         return address.rows
     } catch (error) {
         console.log("cannot get delivery address", error)
