@@ -1,9 +1,9 @@
 const db = require("../db")
 
-const addDeliveryAddress = async(name,user_id,phone,zipcode,locality,deladdress,city,state,landmark,alternatephone) => {
+const addDeliveryAddress = async(user_id, phone, zipcode, locality, deladdress, city, state, landmark, alternatephone,name) => {
     try{
-      const address = await db.pool.query("INSERT INTO address (user_id,phone,zipcode,locality,address,city,state,landmark,alternatephone,name) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *",
-            [user_id,phone,zipcode,locality,deladdress,city,state,landmark,alternatephone,name]
+      const address = await db.pool.query("INSERT INTO address (user_id, phone, zipcode, locality, address, city, state, landmark, alternatephone,name) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *",
+            [user_id, phone, zipcode, locality, deladdress, city, state, landmark, alternatephone,name]
         )
         return address.rows[0]
     }catch(error){

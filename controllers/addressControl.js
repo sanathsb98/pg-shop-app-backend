@@ -1,10 +1,10 @@
 const addressModal = require("../models/address")
 
 const addDeliveryAddress = async (req, res) => {
-    const { user_id, phone, zipcode, locality, deladdress, city, state, landmark, alternatephone,name} = req.body;
+    const {user_id, phone, zipcode, locality, deladdress, city, state, landmark, alternatephone,name} = req.body;
     console.log(user_id, phone, zipcode, locality, deladdress, city, state, landmark, alternatephone,name)
     try {
-        const data = await addressModal.addDeliveryAddress(user_id, phone, zipcode, locality, deladdress, city, state, landmark, alternatephone, name)
+        const data = await addressModal.addDeliveryAddress(user_id, phone, zipcode, locality, deladdress, city, state, landmark, alternatephone,name)
         console.log(data)
         res.status(200).json(data)
     } catch (error) {
