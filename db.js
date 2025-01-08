@@ -80,6 +80,18 @@ const createAddressTable = async() => {
     }
 }
 
+// create payments table:
+const createPaymentsTable = async() => {
+    const filePath = path.join(__dirname,'tables','payments.sql');
+    const sql = fs.readFileSync(filePath,'utf8');
+    try{
+        await pool.query(sql)
+        console.log('payments table created or already exists')
+    }catch(error){
+        console.log('cannot create payments table')
+    }
+}
+
 // Export both the pool and the createUserTable function
 module.exports = {
     pool,
@@ -87,7 +99,8 @@ module.exports = {
     createProductsTable,
     createCartsTable,
     createCartItemsTable,
-    createAddressTable
+    createAddressTable,
+    createPaymentsTable
 };
 
 
